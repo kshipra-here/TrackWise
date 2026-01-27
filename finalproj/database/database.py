@@ -27,8 +27,9 @@ def create_todo_tasks_table():
             userID INTEGER,
             title TEXT,
             description TEXT,
+            priority TEXT,
+            status TEXT,
             dueDate TEXT,
-            completed INTEGER,
             FOREIGN KEY(userID) REFERENCES users(userID)
         );
     """)
