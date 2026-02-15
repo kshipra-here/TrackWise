@@ -35,3 +35,40 @@ def create_todo_tasks_table():
     """)
     conn.commit()
     conn.close()
+
+
+def create_goals_table():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS goals (
+            goalID INTEGER PRIMARY KEY AUTOINCREMENT,
+            userID INTEGER,
+            goalTitle TEXT,
+            description TEXT,
+            startDate TEXT,
+            endDate TEXT,
+            status TEXT,
+            FOREIGN KEY(userID) REFERENCES users(userID)
+        );
+    """)
+    conn.commit()
+    conn.close()
+
+def create_goal_tasks_table():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS goal_tasks (
+            goalTaskID INTEGER PRIMARY KEY AUTOINCREMENT,
+            goalID INTEGER,
+            taskName TEXT,
+            stonDate TEXT,
+            FOREIGN KEY(goalID) REFatus TEXT,
+            completiERENCES goals(goalID)
+        );
+    """)
+    conn.commit()
+    conn.close()
+
+
