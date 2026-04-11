@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Progress Analysis</title>
+  <link rel="stylesheet" href="progress-analysis.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="progress-header">
+  <div class="header-row">
+    <a href="dashboard.html" class="back-btn">←</a>
+    <h1>Progress Analysis</h1>
+  </div>
+
+  <p class="quote">
+    Small progress every day leads to big achievements.
+  </p>
+</div>
+
+<!-- PRODUCTIVITY SCORE -->
+<div class="score-section">
+  <div class="score-card">
+    <h2>Productivity Score</h2>
+    <div class="score-number" id="productivityScore">0 / 100</div>
+    <p class="score-label" id="scoreLabel">No data available</p>
+  </div>
+</div>
+
+<!-- OVERVIEW CARDS -->
+<div class="overview-cards" id="overviewCards">
+  <div class="card">
+    <h3>Completed Tasks</h3>
+    <p id="completedTasks">0</p>
+  </div>
+
+  <div class="card">
+    <h3>Pending Tasks</h3>
+    <p id="pendingTasks">0</p>
+  </div>
+
+  <div class="card">
+    <h3>Goals Achieved</h3>
+    <p id="goalsAchieved">0</p>
+  </div>
+
+  <div class="card">
+    <h3>Total Focus Time</h3>
+    <p id="totalFocusTime">0 hours</p>
+  </div>
+</div>
+
+<!-- DAILY WEEKLY MONTHLY -->
+<div class="progress-row">
+  <div class="graph-card">
+    <h3>Daily Progress</h3>
+    <canvas id="dailyChart"></canvas>
+  </div>
+
+  <div class="graph-card">
+    <h3>Weekly Progress</h3>
+    <canvas id="weeklyChart"></canvas>
+  </div>
+
+  <div class="graph-card">
+    <h3>Monthly Progress</h3>
+    <canvas id="monthlyChart"></canvas>
+  </div>
+</div>
+
+<!-- CIRCLE SECTION -->
+<div class="circle-row">
+  <div class="small-graph-card">
+    <h3>Task Status</h3>
+    <canvas id="taskStatusChart"></canvas>
+  </div>
+
+  <div class="small-graph-card">
+    <h3>Pomodoro vs Focus</h3>
+    <canvas id="sessionChart"></canvas>
+  </div>
+</div>
+
+<!-- GOAL PROGRESS -->
+<div class="goal-section">
+  <h3>Progress Towards Goals</h3>
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="goalProgressBar" style="width: 0%"></div>
+  </div>
+  <p class="consistency-text" id="consistencyText">
+    No data available
+  </p>
+</div>
+
+<!-- INSIGHTS -->
+<div class="insights-wrapper">
+  <div class="insights-card">
+    <h3>Performance Insights</h3>
+
+    <!-- No fake insights -->
+    <p id="insightsText">No insights available yet.</p>
+  </div>
+</div>
+
+<script src="progress-analysis.js"></script>
+</body>
+</html>

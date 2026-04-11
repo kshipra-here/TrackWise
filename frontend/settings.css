@@ -1,0 +1,200 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #0d0d14;
+  color: #e7e6f2;
+}
+
+/* Layout */
+.settings-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background: #161627;
+  border-right: 1px solid #2a2342;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 28px;
+  color: #e7e6f2;
+}
+
+.sidebar-header .back-btn {
+  font-size: 20px;
+  color: #a78bfa;
+  text-decoration: none;
+}
+
+/* Sidebar buttons */
+.sidebar button {
+  background: transparent;
+  border: none;
+  color: #cfccee;
+  text-align: left;
+  padding: 12px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 6px;
+  font-size: 15px;
+  transition: 0.2s ease;
+}
+
+.sidebar button:hover,
+.sidebar button.active {
+  background: #2a2342;
+  color: #a78bfa;
+}
+
+/* Content */
+.content {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+/* Sections */
+.section {
+  display: none;
+  max-width: 600px;
+}
+
+.active-section {
+  display: block;
+}
+
+.section h3 {
+  color: #a78bfa;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.section p {
+  color: #cfccee;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+/* Labels */
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #cfccee;
+  font-size: 14px;
+}
+
+/* Inputs */
+input {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  padding: 12px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  border: 1px solid #2a2342;
+  background: #0d0d14;
+  color: #e7e6f2;
+  outline: none;
+}
+
+input:focus {
+  border-color: #a78bfa;
+}
+
+/* Button group */
+.button-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+/* Buttons */
+.save-btn,
+.secondary-btn,
+.danger-btn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+.save-btn {
+  background: #a78bfa;
+  color: #12121c;
+  border: none;
+}
+
+.save-btn:hover {
+  opacity: 0.9;
+}
+
+.secondary-btn {
+  background: transparent;
+  border: 1px solid #2a2342;
+  color: #cfccee;
+}
+
+.secondary-btn:hover {
+  background: #1a1a28;
+}
+
+.danger-btn {
+  background: #ff6b6b;
+  color: #12121c;
+  border: none;
+}
+
+.danger-btn:hover {
+  opacity: 0.9;
+}
+
+/* Notes */
+.note {
+  color: #cfccee;
+  font-size: 14px;
+  margin-top: -8px;
+  margin-bottom: 16px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .settings-layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #2a2342;
+  }
+
+  .content {
+    padding: 24px;
+  }
+
+  input {
+    max-width: 100%;
+  }
+}

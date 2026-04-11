@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TrackWise | Authentication</title>
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+
+<a href="homepage.html" class="back-btn">←</a>
+
+<!-- Blurred Background -->
+<div class="blur-bg"></div>
+
+<!-- Auth Modal -->
+<div class="auth-modal">
+
+  <!-- Logo -->
+  <div class="logo" onclick="goHome()">
+    Track<span>Wise</span>
+  </div>
+
+  <!-- Auth Box -->
+  <div class="auth-box">
+
+    <!-- SIGN UP -->
+    <div class="form signup active">
+      <h2>Create your account</h2>
+      <p>Start tracking your productivity with TrackWise 🚀</p>
+
+      <input type="text" id="signupName" placeholder="Full Name">
+      <input type="email" id="signupEmail" placeholder="Email">
+      <input type="password" id="signupPassword" placeholder="Password">
+
+      <button>Create Account</button>
+
+      <p class="switch">
+        Already have an account?
+        <span onclick="showLogin()">Log in</span>
+      </p>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="form login">
+      <h2>Welcome back</h2>
+      <p>Let’s get you focused again 🎯</p>
+
+      <input type="email" id="loginEmail" placeholder="Email">
+      <input type="password" id="loginPassword" placeholder="Password">
+
+      <button>Log In</button>
+
+      <p class="switch">
+        Don’t have an account?
+        <span onclick="showSignup()">Sign up</span>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<script src="auth.js"></script>
+</body>
+</html>
+
+

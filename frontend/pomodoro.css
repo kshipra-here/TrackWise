@@ -1,0 +1,153 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #1a1a2e, #0d0d14);
+  color: #e7e6f2;
+  min-height: 100vh;
+}
+
+.pomodoro-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 30px 40px;
+}
+
+.back-btn {
+  font-size: 22px;
+  color: #a78bfa;
+  text-decoration: none;
+}
+
+.pomodoro-header h1 {
+  font-size: 28px;
+}
+
+.pomodoro-header p {
+  font-size: 14px;
+  color: #cfccee;
+}
+
+.pomodoro-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.timer-card {
+  background: #161627;
+  border: 1px solid #2a2342;
+  padding: 40px;
+  border-radius: 18px;
+  margin-bottom: 30px;
+}
+
+.timer-circle {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 6px solid #a78bfa;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.timer-circle span {
+  font-size: 48px;
+  font-weight: 600;
+}
+
+.timer-circle p {
+  margin-top: 5px;
+  color: #a78bfa;
+}
+
+.controls {
+  margin-top: 30px;
+}
+
+.controls button {
+  padding: 12px 24px;
+  margin: 0 8px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #a78bfa;
+  color: #12121c;
+  font-weight: 600;
+}
+
+.controls .secondary {
+  background: transparent;
+  border: 1px solid #a78bfa;
+  color: #a78bfa;
+}
+
+.mode-selector {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.mode-selector button {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid #2a2342;
+  background: #161627;
+  color: #d6d3f0;
+  cursor: pointer;
+}
+
+.mode-selector .active {
+  background: #a78bfa;
+  color: #12121c;
+}
+
+.motivation-card {
+  background: #161627;
+  border: 1px solid #2a2342;
+  padding: 30px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+}
+
+.motivation-card p {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.motivation-card select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #12121c;
+  color: #e7e6f2;
+  border: 1px solid #2a2342;
+}
+
+.summary {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.summary-box {
+  background: #161627;
+  border: 1px solid #2a2342;
+  padding: 20px;
+  border-radius: 14px;
+  width: 200px;
+}
+
+.summary-box h4 {
+  font-size: 28px;
+  color: #a78bfa;
+}
+

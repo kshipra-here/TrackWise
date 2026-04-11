@@ -1,0 +1,214 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  display: flex;
+  background: radial-gradient(circle at top, #0f0f1a, #0b0c1a);
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: linear-gradient(180deg,#1a1a2e, #0b0c1a);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.logo {
+  text-decoration: none;
+  color: inherit;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.track {
+    color: #ffffff;   
+}
+
+.wise {
+    color: #a78bfa;   
+}
+
+.menu a,
+.sidebar-bottom a {
+  display: block;
+  padding: 12px;
+  margin: 6px 0;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #c7c7e0;
+  text-decoration: none;
+}
+
+.menu a.active,
+.menu a:hover {
+  background: rgba(167, 139, 250, 0.15);
+  color: #fff;
+}
+
+.logout {
+  color: #ff6b6b;
+}
+
+.settings-link {
+  display: block;
+  color: #cfccee;
+  text-decoration: none;
+  padding: 8px 0;
+  transition: 0.2s ease;
+}
+
+.settings-link:hover {
+  color: #a78bfa;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 24px 32px;
+}
+
+/* Topbar */
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-top: 10px;
+}
+
+.topbar input {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: none;
+  background: #1c1d3a;
+  color: #fff;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #a78bfa, #7c5cff);
+  border: none;
+  padding: 12px 18px;
+  border-radius: 12px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  background: #3b82f6;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Sections */
+section {
+  margin-bottom: 40px;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+.subtext {
+  color: #a1a1c7;
+  margin-bottom: 20px;
+}
+
+/* Cards */
+.stats,
+.task-grid,
+.productivity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card,
+.task-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.number {
+  font-size: 28px;
+  margin-top: 10px;
+}
+
+.danger {
+  color: #ff6b6b;
+}
+
+/* Tasks */
+.tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.ai {
+  background: rgba(124, 92, 255, 0.25);
+}
+
+.priority {
+  background: rgba(255, 107, 107, 0.25);
+}
+
+.time {
+  display: block;
+  margin-top: 10px;
+  color: #bdbde6;
+}
+
+/* Productivity */
+.big {
+  font-size: 26px;
+}
+
+.breakdown li {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+}
+
+progress {
+  width: 100%;
+  height: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+progress::-webkit-progress-bar {
+  background: #2a2b55;
+}
+progress::-webkit-progress-value {
+  background: linear-gradient(90deg, #a78bfa, #7c5cff);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+
+

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Tasks | TrackWise</title>
+  <link rel="stylesheet" href="my-tasks.css">
+</head>
+<body>
+
+<!-- Top Bar -->
+<header class="page-header">
+  <div class="left-header">
+    <a href="dashboard.html" class="back-btn">←</a>
+    <h1>My Tasks</h1>
+  </div>
+
+  <button class="add-task-btn">+ Add Task</button>
+</header>
+
+<!-- Task Summary -->
+<section class="task-summary">
+  <div class="summary-card">
+    <h3 id="totalCount">0</h3>
+    <p>Total Tasks</p>
+  </div>
+  <div class="summary-card">
+    <h3 id="completedCount">0</h3>
+    <p>Completed</p>
+  </div>
+  <div class="summary-card">
+    <h3 id="pendingCount">0</h3>
+    <p>Pending</p>
+  </div>
+  <div class="summary-card danger">
+    <h3 id="overdueCount">0</h3>
+    <p>Overdue</p>
+  </div>
+</section>
+
+<!-- Filters -->
+<section class="task-filters">
+  <button class="active">All</button>
+  <button>Today</button>
+  <button>Priority</button>
+  <button>Completed</button>
+</section>
+
+<!-- Task List -->
+<section class="task-list">
+  <!-- Dynamic tasks will appear here -->
+</section>
+
+<!-- Add Task Modal -->
+<div class="modal" id="taskModal">
+  <div class="modal-content">
+    <h3>Add New Task</h3>
+
+    <label>Task Title</label>
+    <input type="text" id="taskTitle" placeholder="e.g. Revise DBMS Unit 4">
+
+    <label>Description</label>
+    <textarea id="taskDesc" placeholder="Optional details..."></textarea>
+
+    <label>Priority</label>
+    <select id="taskPriority">
+      <option>High</option>
+      <option>Medium</option>
+      <option>Low</option>
+    </select>
+
+    <label>Due Date</label>
+    <input type="date" id="taskDate">
+
+    <div class="modal-actions">
+      <button class="cancel">Cancel</button>
+      <button class="save">Save Task</button>
+    </div>
+  </div>
+</div>
+
+<script src="my-tasks.js"></script>
+
+</body>
+</html>

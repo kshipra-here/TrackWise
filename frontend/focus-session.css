@@ -1,0 +1,119 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #0f0f1a;
+    color: white;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    padding: 25px 40px;
+    background-color: #1a1a2e;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Back Arrow */
+.back-section {
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.back-arrow {
+    font-size: 22px; /* slightly bigger */
+    color: #a29bfe;
+    font-weight: bold;
+}
+
+.back-btn:hover {
+  background: #a78bfa;
+  color: #12121c;
+}
+
+/* Title Section */
+.title-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.page-title {
+    font-size: 28px; /* bigger than before */
+    font-weight: 700;
+    margin: 0;
+    color: #ffffff;
+}
+
+.header-quote {
+    font-size: 13px;
+    margin-top: 6px;
+    color: #b2bec3;
+    font-style: normal;
+}
+
+/* Wrapper */
+.focus-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+}
+
+/* Timer Box */
+.timer-box {
+    background-color: #1a1a2e;
+    padding: 50px 90px; /* bigger box */
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(162, 155, 254, 0.4);
+    margin-bottom: 35px;
+}
+
+.timer {
+    font-size: 80px; /* bigger timer */
+    font-weight: bold;
+    color: #a29bfe;
+}
+
+/* Buttons */
+.buttons button {
+    padding: 12px 28px;
+    margin: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #6c5ce7;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.buttons button:hover {
+    background-color: #a29bfe;
+    color: #0f0f1a;
+}
+
+/* Sound */
+.sound-section {
+    margin-top: 20px;
+    color: #b2bec3;
+}
+
+.sound-section select {
+    margin-left: 10px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    background-color: #6c5ce7;
+    color: white;
+}
+
+/* Bottom Quote */
+.quote-box {
+    margin-top: 40px;
+    font-style: italic;
+    color: #b2bec3;
+    max-width: 450px;
+    text-align: center;
+}
+

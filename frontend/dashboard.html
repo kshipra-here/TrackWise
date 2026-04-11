@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TrackWise|Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css"/>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="homepage.html" class="logo">
+    <span class="track">Track</span><span class="wise">Wise</span>
+    </a>
+
+    <nav class="menu">
+      <a href="dashboard.html" class="active">Dashboard</a>
+      <a href="homepage.html">Home</a>
+      <a href="my-tasks.html">My Tasks</a>
+      <a href="my-goals.html">My Goals</a>
+      <a href="pomodoro.html?from=dashboard">Pomodoro</a>
+      <a href="focus-session.html">Focus Session</a>
+      <a href="progress-analysis.html">Progress Analysis</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <a href="settings.html" class="settings-link"> Settings</a>
+      <a class="logout"> Log Out</a>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    
+  <header class="topbar">
+  <div class="avatar"></div>
+  </header>
+
+    <!-- Overview -->
+    <section class="overview">
+      <h2>Overview</h2>
+      <p class="subtext">
+        Track your productivity, focus sessions, and goal progress in one place.
+      </p>
+
+      <!-- Stats -->
+      <div class="stats">
+        <div class="card">
+          <h3>Completed Tasks</h3>
+          <p class="number" id="completedTasks">0</p>
+        </div>
+        <div class="card">
+          <h3>Total Focus Time</h3>
+          <p class="number" id="totalFocusTime">0 mins</p>
+        </div>
+        <div class="card">
+          <h3>Goals Completed</h3>
+          <p class="number" id="goalsCompleted">0</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tasks -->
+    <section class="tasks">
+      <h2>Suggested & Pending Tasks</h2>
+
+      <!-- Empty container instead of dummy cards -->
+      <div class="task-grid" id="taskContainer">
+        <p>No tasks available</p>
+      </div>
+    </section>
+
+    <!-- Productivity -->
+    <section class="productivity">
+      <h2>Productivity Overview</h2>
+
+      <div class="productivity-grid">
+        <div class="card">
+          <h3>Today's Focus</h3>
+          <p class="big" id="todayFocus">0 mins</p>
+        </div>
+
+        <div class="card">
+          <h3>Time Allocation</h3>
+          <ul class="breakdown">
+            <li>Deep Work <span id="deepWork">0%</span></li>
+            <li>Study <span id="studyTime">0%</span></li>
+            <li>Breaks <span id="breakTime">0%</span></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Goal Progress</h3>
+          <progress id="goalProgress" value="0" max="100"></progress>
+          <p id="goalText">0 goals completed</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+  // Check if user is logged in
+  if (!localStorage.getItem('userID')) {
+    window.location.href = 'auth.html';
+  }
+
+  const userID = parseInt(localStorage.getItem('userID'));
+  const API_URL = 'http://127.0.0.1:5000';
+
+  function setUserAvatar() {
+    const name = localStorage.getItem("name");
+    const avatar = document.querySelector(".avatar");
+
+    if (avatar) {
+      avatar.textContent = name ? name.charAt(0).toUpperCase() : "U";
+    }
+  }
+
+  async function loadAnalytics() {
+    try {
+      const res = await fetch(`${API_URL}/analytics/summary/${userID}`);
+      if (!res.ok) throw new Error("Failed to load analytics");
+
+      const data = await res.json();
+
+      const completedTasksEl = document.getElementById('completedTasks');
+      const totalFocusTimeEl = document.getElementById('totalFocusTime');
+      const goalsCompletedEl = document.getElementById('goalsCompleted');
+      const todayFocusEl = document.getElementById('todayFocus');
+
+      if (completedTasksEl) {
+        completedTasksEl.textContent = data.tasksCompleted || 0;
+      }
+
+      if (totalFocusTimeEl) {
+        totalFocusTimeEl.textContent =
+          Math.floor((data.totalFocusTime || 0) / 60) + ' mins';
+      }
+
+      if (goalsCompletedEl) {
+        goalsCompletedEl.textContent = data.goalsCompleted || 0;
+      }
+
+      if (todayFocusEl) {
+        todayFocusEl.textContent =
+          Math.floor((data.totalFocusTime || 0) / 60) + ' mins';
+      }
+
+    } catch (err) {
+      console.error('Failed to load analytics', err);
+    }
+  }
+
+  loadAnalytics();
+  setUserAvatar();
+  setInterval(loadAnalytics, 30000);
+
+  document.querySelector('.logout').addEventListener('click', function () {
+    localStorage.clear();
+    window.location.href = 'auth.html';
+  });
+</script>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pomodoro | TrackWise</title>
+  <link rel="stylesheet" href="pomodoro.css">
+</head>
+<body>
+
+<header class="pomodoro-header">
+  <a href="dashboard.html" class="back-btn" id="backBtn">←</a>
+  <div>
+    <h1>Pomodoro Timer</h1>
+    <p>Focus in short bursts. Win the long game.</p>
+  </div>
+</header>
+
+<main class="pomodoro-container">
+
+  <!-- Task Display (only visible if opened from tasks)-->
+  <section id="taskInfo" style="display:none; margin-bottom:20px;">
+    <div class="timer-card" style="padding:20px;">
+      <h3 id="taskTitleDisplay"></h3>
+    </div>
+  </section>
+
+  <!-- Timer Card -->
+  <section class="timer-card">
+    <div class="timer-circle">
+      <span id="timer">25:00</span>
+      <p id="mode">Focus</p>
+    </div>
+
+    <div class="controls">
+      <button onclick="startTimer()">Start</button>
+      <button onclick="pauseTimer()">Pause</button>
+      <button class="secondary" onclick="resetTimer()">Reset</button>
+    </div>
+  </section>
+
+  <!-- Mode Selector -->
+  <section class="mode-selector">
+    <button class="active" onclick="setMode(25, 'Focus', event)">Pomodoro</button>
+    <button onclick="setMode(5, 'Short Break', event)">Short Break</button>
+    <button onclick="setMode(15, 'Long Break', event)">Long Break</button>
+  </section>
+
+  <!-- Motivation -->
+  <section class="motivation-card">
+    <p id="quote">
+      Every session takes you closer to your goal.
+    </p>
+  </section>
+
+  <!-- Today Summary -->
+  <section class="summary">
+    <div class="summary-box">
+      <h4 id="sessionsDone">0</h4>
+      <p>Pomodoros Done</p>
+    </div>
+    <div class="summary-box">
+      <h4 id="focusTime">0 min</h4>
+      <p>Focus Time</p>
+    </div>
+  </section>
+
+</main>
+
+<script src="pomodoro.js"></script>
+</body>
+</html>

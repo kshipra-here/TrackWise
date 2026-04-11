@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TrackWise | My Goals</title>
+  <link rel="stylesheet" href="my-goals.css">
+</head>
+<body>
+
+<header class="page-header">
+  <div class="left-header">
+    <a href="dashboard.html" class="back-btn">←</a>
+    <h1>My Goals</h1>
+  </div>
+  <button class="add-btn">+ Add Goal</button>
+</header>
+
+<main class="task-grid" id="goalContainer">
+</main>
+
+<!-- Modal -->
+<div class="modal" id="goalModal">
+  <div class="modal-content">
+    <h3>Add New Goal</h3>
+
+    <label>Goal Title</label>
+    <input type="text" id="goalTitle" placeholder="e.g. Learn React Basics">
+
+    <label>Goal Type</label>
+    <select id="goalType">
+      <option>Daily</option>
+      <option>Weekly</option>
+      <option>Monthly</option>
+      <option>Long Term</option>
+    </select>
+
+    <label>Steps to Complete Goal</label>
+    <div id="stepsContainer"></div>
+    <button type="button" class="add-step-btn" onclick="addStep()">+ Add Step</button>
+
+    <label>Deadline</label>
+    <input type="date" id="goalDeadline">
+
+    <div class="modal-actions">
+      <button class="cancel">Cancel</button>
+      <button class="save">Save Goal</button>
+    </div>
+  </div>
+</div>
+
+<script src="my-goals.js"></script>
+
+</body>
+</html>

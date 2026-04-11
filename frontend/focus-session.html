@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Focus Session</title>
+    <link rel="stylesheet" href="focus-session.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="back-section" id="backBtn">
+            <span class="back-arrow">←</span>
+        </div>
+
+        <div class="title-section">
+            <h1 class="page-title">Focus Session</h1>
+            <p class="header-quote">Your goals deserve your full attention.</p>
+        </div>
+    </div>
+
+    <div class="focus-wrapper">
+
+        <!-- Task Display (ONLY if opened from tasks) -->
+        <div id="taskInfo" style="display:none; margin-bottom:20px;">
+            <div class="timer-box" style="padding:20px;">
+                <h3 id="taskTitleDisplay"></h3>
+            </div>
+        </div>
+
+        <!-- Timer -->
+        <div class="timer-box">
+            <div class="timer" id="timer">00:00:00</div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons">
+            <button onclick="startTimer()">Start</button>
+            <button onclick="pauseTimer()">Pause</button>
+            <button onclick="resetTimer()">Reset</button>
+        </div>
+
+        <!-- Sound -->
+        <div class="sound-section">
+            <label>Focus Sound:</label>
+            <select onchange="changeSound(this.value)">
+                <option value="none">None</option>
+                <option value="rain">Rain</option>
+                <option value="forest">Forest</option>
+            </select>
+        </div>
+
+        <!-- Bottom Quote -->
+        <div class="quote-box">
+            <p id="quote">Stay consistent. Stay powerful.</p>
+        </div>
+
+    </div>
+
+    <audio id="rainSound" loop>
+        <source src="rain.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="forestSound" loop>
+        <source src="forest.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="focus-session.js"></script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0d0d14;
+  color: #e7e6f2;
+}
+
+/* Header */
+.progress-header {
+  padding: 40px;
+  background: linear-gradient(to right, #151528, #1c1c3a);
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.back-btn {
+  text-decoration: none;
+  font-size: 22px;
+  color: #a78bfa;
+}
+
+.header-row h1 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.quote {
+  margin-top: 8px;
+  font-size: 16px;
+  color: #cfccee;
+  padding: 30px 40px;
+}
+
+/* Productivity Score */
+.score-section {
+  display: flex;
+  justify-content: center;
+  padding: 30px 40px;
+}
+
+.score-card {
+  max-width: 420px;   /* fixed safe width */
+  width: 100%;
+  background: #161627;
+  border: 1px solid #2a2342;
+  border-radius: 16px;
+  padding: 25px;
+  text-align: center;
+}
+
+.score-card h2 {
+  color: #a78bfa;
+}
+
+.score-number {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.score-label {
+  color: #cfccee;
+}
+
+/* Overview Cards */
+.overview-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 0 40px 30px;
+}
+
+.card {
+  background: #161627;
+  border: 1px solid #2a2342;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.card h3 {
+  color: #a78bfa;
+}
+
+.card p {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.sub-info {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #cfccee;
+  font-weight: normal;
+}
+
+/* Graph Row */
+.progress-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 0 40px 30px;
+}
+
+.graph-card {
+  background: #161627;
+  border: 1px solid #2a2342;
+  border-radius: 14px;
+  padding: 15px;
+}
+
+.graph-card canvas {
+  height: 180px !important;
+}
+
+.trend {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #4ade80;
+}
+
+/* Circle Row */
+.circle-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 0 40px 30px;
+}
+
+.small-graph-card {
+  background: #161627;
+  border: 1px solid #2a2342;
+  border-radius: 14px;
+  padding: 15px;
+}
+
+.small-graph-card canvas {
+  height: 200px !important;
+}
+
+/* Goal Section */
+.goal-section {
+  margin: 0 40px 40px;
+  background: #161627;
+  border: 1px solid #2a2342;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.progress-bar-container {
+  background: #2a2342;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+.progress-bar {
+  height: 12px;
+  background: #a78bfa;
+  width: 70%;
+}
+
+.consistency-text {
+  color: #cfccee;
+}
+
+/* Insights */
+.insights-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.insights-card {
+  width: 70%;
+  background: #161627;
+  border: 1px solid #2a2342;
+  border-radius: 16px;
+  padding: 25px;
+}
+
+.insights-card h3 {
+  color: #a78bfa;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.insight-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  color: #cfccee;
+  font-size: 14px;
+}
+
+.insight-dot {
+  width: 8px;
+  height: 8px;
+  background: #a78bfa;
+  border-radius: 50%;
+  margin-top: 6px;
+}

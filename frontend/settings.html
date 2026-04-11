@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Settings | TrackWise</title>
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+
+<div class="settings-layout">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+
+    <div class="sidebar-header">
+      <a href="dashboard.html" class="back-btn">←</a>
+      <h2>Settings</h2>
+    </div>
+
+    <button onclick="showSection('profile')" class="active">Profile</button>
+    <button onclick="showSection('notifications')">Notifications</button>
+    <button onclick="showSection('security')">Security</button>
+    <button onclick="showSection('account')">Account</button>
+    <button onclick="showSection('about')">About</button>
+
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- PROFILE -->
+    <div id="profile" class="section active-section">
+      <h3>Profile</h3>
+
+      <input type="text" id="profileName" placeholder="Your Name">
+      <input type="email" id="profileEmail" placeholder="Email">
+
+      <button id="saveProfileBtn" class="save-btn">Save Changes</button>
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div id="notifications" class="section">
+      <h3>Notifications</h3>
+
+      <label>Reminder Time</label>
+      <input type="time" id="reminderTime">
+
+      <button id="saveNotificationBtn" class="save-btn">Save</button>
+    </div>
+
+    <!-- SECURITY -->
+    <div id="security" class="section">
+      <h3>Security</h3>
+
+      <input type="password" id="currentPassword" placeholder="Current Password">
+      <input type="password" id="newPassword" placeholder="New Password">
+      <input type="password" id="confirmPassword" placeholder="Confirm Password">
+
+      <button id="updatePasswordBtn" class="save-btn">Update Password</button>
+    </div>
+
+    <!-- ACCOUNT -->
+    <div id="account" class="section">
+      <h3>Account</h3>
+
+      <div class="button-group">
+        <button id="logoutBtn" class="secondary-btn">Logout</button>
+        <button id="deleteAccountBtn" class="danger-btn">Delete Account</button>
+        <button id="exportDataBtn" class="secondary-btn">Export Data</button>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div id="about" class="section">
+      <h3>About</h3>
+      <p>
+        TrackWise is a smart productivity management platform designed to help users organize tasks,
+        track goals, and improve focus through structured workflows. It integrates task management, 
+        goal tracking, focus sessions, and analytics into one unified system. The application is 
+        developed using HTML, CSS, and JavaScript for the frontend, Python for backend processing, 
+        and SQLite for efficient data storage, ensuring a responsive and scalable user experience.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="settings.js"></script>
+</body>
+</html>
