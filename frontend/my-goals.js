@@ -42,11 +42,41 @@ async function loadGoals() {
   try {
     const res = await fetch(`${API_URL}/goals/${userID}`);
     if (!res.ok) throw new Error('Failed to load goals');
+
     currentGoals = await res.json();
     renderGoals();
   } catch (err) {
     console.error('Failed to load goals:', err);
     alert('Failed to load goals');
+  }
+}
+
+// Load goal steps from backend
+async function loadGoalSteps(goalID, container) {
+  try {
+    const res = await fetch(`${API_URL}/goal-tasks/${goalID}`);
+    if (!res.ok) throw new Error('Failed to load goal steps');
+
+    const steps = await res.json();
+    container.innerHTML = "";
+
+    if (!steps.length) {
+      container.innerHTML = `<p class="no-steps">No steps added</p>`;
+      return;
+    }
+
+    steps.forEach(step => {
+      const stepItem = document.createElement("div");
+      stepItem.className = "goal-step-item";
+      stepItem.innerHTML = `
+        <span>• ${step.taskName}</span>
+        <span class="step-status">${step.status}</span>
+      `;
+      container.appendChild(stepItem);
+    });
+  } catch (err) {
+    console.error(`Failed to load steps for goal ${goalID}:`, err);
+    container.innerHTML = `<p class="no-steps">Failed to load steps</p>`;
   }
 }
 
@@ -62,6 +92,7 @@ async function saveGoal() {
   }
 
   try {
+    // 1. Create goal
     const res = await fetch(`${API_URL}/create-goal`, {
       method: "POST",
       headers: {
@@ -78,13 +109,39 @@ async function saveGoal() {
 
     if (!res.ok) throw new Error('Failed to save goal');
 
-    // Get the steps
+    // 2. Reload goals to get latest created goal
+    const goalsRes = await fetch(`${API_URL}/goals/${userID}`);
+    if (!goalsRes.ok) throw new Error('Failed to reload goals');
+
+    const goalsList = await goalsRes.json();
+    if (!goalsList.length) throw new Error('Goal created but not found');
+
+    const latestGoal = goalsList[goalsList.length - 1];
+    const goalId = latestGoal.goalID;
+
+    // 3. Save steps
     const stepInputs = document.querySelectorAll(".step-input");
-    const goalId = currentGoals.length + 1; // Simple approach for now
-    
-    // Save steps if needed (you might want to add them as tasks)
-    
-    // Clear form
+    for (const input of stepInputs) {
+      const stepValue = input.value.trim();
+      if (stepValue !== "") {
+        const stepRes = await fetch(`${API_URL}/add-goal-task`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            goalID: goalId,
+            taskName: stepValue
+          })
+        });
+
+        if (!stepRes.ok) {
+          throw new Error(`Failed to save step: ${stepValue}`);
+        }
+      }
+    }
+
+    // 4. Clear form
     document.getElementById("goalTitle").value = "";
     document.getElementById("goalDeadline").value = "";
     stepsContainer.innerHTML = "";
@@ -132,9 +189,7 @@ async function toggleComplete(goalID) {
       throw new Error('Failed to update goal');
     }
 
-    // Reload goals after update
     loadGoals();
-
   } catch (err) {
     console.error('Failed to toggle goal:', err);
     alert('Failed to update goal');
@@ -150,7 +205,7 @@ function renderGoals() {
     card.className = "task-card";
     if (goal.status === "completed") card.classList.add("completed");
 
-    const deadline = goal.endDate 
+    const deadline = goal.endDate
       ? new Date(goal.endDate).toLocaleDateString("en-GB", {
           day: "numeric",
           month: "short",
@@ -160,14 +215,16 @@ function renderGoals() {
 
     card.innerHTML = `
       <button class="delete-btn" onclick="deleteGoal(${goal.goalID})">×</button>
-  
+
       <h3>${goal.title}</h3>
-  
+
       <p class="deadline">
         Deadline: ${deadline}
       </p>
 
       <span class="priority">${goal.description} Goal</span>
+
+      <div id="steps-${goal.goalID}" class="goal-steps"></div>
 
       <button class="complete-btn" onclick="toggleComplete(${goal.goalID})">
         ${goal.status === "completed" ? "completed ✓" : "Mark as completed"}
@@ -175,6 +232,9 @@ function renderGoals() {
     `;
 
     goalContainer.appendChild(card);
+
+    const stepContainer = document.getElementById(`steps-${goal.goalID}`);
+    loadGoalSteps(goal.goalID, stepContainer);
   });
 }
 
