@@ -30,10 +30,11 @@ body {
 }
 
 .quote {
-  margin-top: 8px;
+  margin-top: 4px;
+  margin-left: 38px; 
   font-size: 16px;
   color: #cfccee;
-  padding: 30px 40px;
+  padding: 0;
 }
 
 /* Productivity Score */

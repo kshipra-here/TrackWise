@@ -15,19 +15,31 @@ def get_daily_analytics(userID):
         GROUP BY dueDate
         ORDER BY dueDate
     """, (userID,))
+    task_rows = cursor.fetchall()
+
+    cursor.execute("""
+        SELECT sessionDate, COALESCE(SUM(totalDuration), 0) as total_focus_time
+        FROM stopwatch_sessions
+        WHERE userID=?
+        GROUP BY sessionDate
+        ORDER BY sessionDate
+    """, (userID,))
+    focus_rows = cursor.fetchall()
+
+    focus_map = {}
+    for row in focus_rows:
+        focus_map[row[0]] = row[1]
 
     daily_data = []
-    for row in cursor.fetchall():
+    for row in task_rows:
         daily_data.append({
             "date": row[0],
             "tasks_completed": row[1],
-            "total_focus_time": 0
+            "total_focus_time": focus_map.get(row[0], 0)
         })
 
     conn.close()
     return daily_data
-
-
 # ----------------------------
 # WEEKLY ANALYTICS
 # ----------------------------

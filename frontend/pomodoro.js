@@ -7,10 +7,11 @@ const userID = parseInt(localStorage.getItem('userID'));
 const API_URL = 'http://127.0.0.1:5000';
 
 let time = 25 * 60;
-let timerInterval;
+let timerInterval = null;
 let isRunning = false;
 let sessions = 0;
 let focusMinutes = 0;
+let sessionStartTime = null;
 
 const timerDisplay = document.getElementById("timer");
 const modeText = document.getElementById("mode");
@@ -40,38 +41,46 @@ if (from === "tasks" && taskId) {
     .catch(err => console.error('Failed to load task:', err));
 }
 
-// Timer
+// Timer display
 function updateDisplay() {
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
-  timerDisplay.textContent =
-    `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  timerDisplay.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 }
-
-let sessionStartTime = null;
 
 function startTimer() {
   if (isRunning) return;
-  isRunning = true;
-  sessionStartTime = new Date().toISOString();
 
-  timerInterval = setInterval(() => {
+  isRunning = true;
+
+  if (!sessionStartTime && modeText.textContent === "Focus") {
+    sessionStartTime = new Date().toISOString();
+  }
+
+  timerInterval = setInterval(async () => {
     if (time > 0) {
       time--;
       updateDisplay();
     } else {
       clearInterval(timerInterval);
+      timerInterval = null;
       isRunning = false;
 
       if (modeText.textContent === "Focus") {
         sessions++;
         focusMinutes += 25;
-        document.getElementById("sessionsDone").textContent = sessions;
-        document.getElementById("focusTime").textContent =
-          focusMinutes + " min";
 
-        // Save session
-        savePomodoroSession(sessionStartTime, new Date().toISOString(), 25, 5);
+        document.getElementById("sessionsDone").textContent = sessions;
+        document.getElementById("focusTime").textContent = focusMinutes + " min";
+
+        await savePomodoroSession(
+          sessionStartTime,
+          new Date().toISOString(),
+          25 * 60,
+          5 * 60
+        );
+
+        sessionStartTime = null;
       }
 
       alert("Session completed! 🎉");
@@ -81,14 +90,17 @@ function startTimer() {
 
 function pauseTimer() {
   clearInterval(timerInterval);
+  timerInterval = null;
   isRunning = false;
 }
 
 function resetTimer() {
   clearInterval(timerInterval);
+  timerInterval = null;
   isRunning = false;
   time = 25 * 60;
   modeText.textContent = "Focus";
+  sessionStartTime = null;
   updateDisplay();
 
   document.querySelectorAll(".mode-selector button")
@@ -100,10 +112,16 @@ function resetTimer() {
 
 function setMode(minutes, mode, event) {
   clearInterval(timerInterval);
+  timerInterval = null;
   isRunning = false;
 
   time = minutes * 60;
   modeText.textContent = mode;
+
+  if (mode !== "Focus") {
+    sessionStartTime = null;
+  }
+
   updateDisplay();
 
   document.querySelectorAll(".mode-selector button")
@@ -136,7 +154,6 @@ async function savePomodoroSession(startTime, endTime, workDuration, breakDurati
     }
 
     console.log("Pomodoro session saved");
-
   } catch (err) {
     console.error('Failed to save pomodoro session', err);
   }

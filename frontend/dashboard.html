@@ -52,7 +52,7 @@
         </div>
         <div class="card">
           <h3>Total Focus Time</h3>
-          <p class="number" id="totalFocusTime">0 mins</p>
+          <p class="number" id="totalFocusTime">0h 0m 0s</p>
         </div>
         <div class="card">
           <h3>Goals Completed</h3>
@@ -78,7 +78,7 @@
       <div class="productivity-grid">
         <div class="card">
           <h3>Today's Focus</h3>
-          <p class="big" id="todayFocus">0 mins</p>
+          <p class="big" id="todayFocus">0h 0m 0s</p>
         </div>
 
         <div class="card">
@@ -100,7 +100,7 @@
 
   </main>
 
-  <script>
+<script>
   // Check if user is logged in
   if (!localStorage.getItem('userID')) {
     window.location.href = 'auth.html';
@@ -118,6 +118,16 @@
     }
   }
 
+  function formatTime(seconds) {
+    seconds = seconds || 0;
+
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    return `${hrs}h ${mins}m ${secs}s`;
+  }
+
   async function loadAnalytics() {
     try {
       const res = await fetch(`${API_URL}/analytics/summary/${userID}`);
@@ -129,14 +139,16 @@
       const totalFocusTimeEl = document.getElementById('totalFocusTime');
       const goalsCompletedEl = document.getElementById('goalsCompleted');
       const todayFocusEl = document.getElementById('todayFocus');
+      const deepWorkEl = document.getElementById('deepWork');
+      const studyTimeEl = document.getElementById('studyTime');
+      const breakTimeEl = document.getElementById('breakTime');
 
       if (completedTasksEl) {
         completedTasksEl.textContent = data.tasksCompleted || 0;
       }
 
       if (totalFocusTimeEl) {
-        totalFocusTimeEl.textContent =
-          Math.floor((data.totalFocusTime || 0) / 60) + ' mins';
+        totalFocusTimeEl.textContent = formatTime(data.totalFocusTime || 0);
       }
 
       if (goalsCompletedEl) {
@@ -144,8 +156,19 @@
       }
 
       if (todayFocusEl) {
-        todayFocusEl.textContent =
-          Math.floor((data.totalFocusTime || 0) / 60) + ' mins';
+        todayFocusEl.textContent = formatTime(data.totalFocusTime || 0);
+      }
+
+      if (deepWorkEl) {
+        deepWorkEl.textContent = `${data.deepWorkPercent || 0}%`;
+      }
+
+      if (studyTimeEl) {
+        studyTimeEl.textContent = `${data.studyPercent || 0}%`;
+      }
+
+      if (breakTimeEl) {
+        breakTimeEl.textContent = `${data.breakPercent || 0}%`;
       }
 
     } catch (err) {
@@ -153,9 +176,78 @@
     }
   }
 
-  loadAnalytics();
+  async function loadGoalProgress() {
+    try {
+      const res = await fetch(`${API_URL}/goals/${userID}`);
+      if (!res.ok) throw new Error("Failed to load goals");
+
+      const goals = await res.json();
+
+      const totalGoals = goals.length;
+      const completedGoals = goals.filter(goal =>
+      goal.status && goal.status.trim().toLowerCase() === "completed"
+      ).length;
+      const percent = totalGoals > 0 ? Math.round((completedGoals / totalGoals) * 100) : 0;
+
+      const goalProgressEl = document.getElementById('goalProgress');
+      const goalTextEl = document.getElementById('goalText');
+
+      if (goalProgressEl) {
+        goalProgressEl.value = percent;
+      }
+
+      if (goalTextEl) {
+        goalTextEl.textContent = `${completedGoals} of ${totalGoals} goals completed`;
+      }
+
+    } catch (err) {
+      console.error('Failed to load goal progress', err);
+    }
+  }
+
+  async function loadSuggestedTasks() {
+    try {
+      const res = await fetch(`${API_URL}/tasks/${userID}`);
+      if (!res.ok) throw new Error("Failed to load tasks");
+
+      const tasks = await res.json();
+      const taskContainer = document.getElementById('taskContainer');
+
+      if (!taskContainer) return;
+
+      const pendingTasks = tasks.filter(task => task.status !== "Completed");
+
+      taskContainer.innerHTML = "";
+
+      if (pendingTasks.length === 0) {
+        taskContainer.innerHTML = "<p>No tasks available</p>";
+        return;
+      }
+
+      pendingTasks.slice(0, 4).forEach(task => {
+        taskContainer.innerHTML += `
+          <div class="task-card">
+            <h3>${task.title}</h3>
+            <p>${task.description ? task.description : "No description"}</p>
+            <span class="priority">${task.priority || "Normal"}</span>
+          </div>
+        `;
+      });
+
+    } catch (err) {
+      console.error('Failed to load suggested tasks', err);
+    }
+  }
+
+  async function loadDashboard() {
+    await loadAnalytics();
+    await loadGoalProgress();
+    await loadSuggestedTasks();
+  }
+
+  loadDashboard();
   setUserAvatar();
-  setInterval(loadAnalytics, 30000);
+  setInterval(loadDashboard, 30000);
 
   document.querySelector('.logout').addEventListener('click', function () {
     localStorage.clear();
