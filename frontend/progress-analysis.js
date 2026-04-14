@@ -175,21 +175,40 @@ async function createSessionChart() {
       });
     }
 
+    const hasData = pomodoroCount > 0 || focusCount > 0;
+
+    const chartData = hasData
+      ? [pomodoroCount, focusCount]
+      : [1, 1];
+
+    const chartLabels = hasData
+      ? ['Pomodoro', 'Focus Sessions']
+      : ['No Data', 'No Data'];
+
+    const chartColors = hasData
+      ? ['#F59E0B', '#8B5CF6']
+      : ['#2a2a3d', '#2a2a3d'];
+
     new Chart(ctx, {
       type: 'doughnut',
       data: {
-        labels: ['Pomodoro', 'Focus Sessions'],
+        labels: chartLabels,
         datasets: [{
-          data: [pomodoroCount, focusCount],
-          backgroundColor: ['#F59E0B', '#8B5CF6'],
+          data: chartData,
+          backgroundColor: chartColors,
           borderWidth: 2
         }]
       },
       options: {
         responsive: true,
-        plugins: { legend: { display: true } }
+        plugins: {
+          legend: {
+            display: true
+          }
+        }
       }
     });
+
   } catch (err) {
     console.error('Failed to load session chart:', err);
   }
