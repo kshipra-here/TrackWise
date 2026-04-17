@@ -1,9 +1,7 @@
 from database import get_connection
 
-
-# ----------------------------
 # DAILY ANALYTICS
-# ----------------------------
+
 def get_daily_analytics(userID):
     conn = get_connection()
     cursor = conn.cursor()
@@ -40,9 +38,9 @@ def get_daily_analytics(userID):
 
     conn.close()
     return daily_data
-# ----------------------------
+
 # WEEKLY ANALYTICS
-# ----------------------------
+
 def get_weekly_analytics(userID):
     conn = get_connection()
     cursor = conn.cursor()
@@ -67,10 +65,8 @@ def get_weekly_analytics(userID):
     conn.close()
     return weekly_data
 
-
-# ----------------------------
 # SUMMARY ANALYTICS
-# ----------------------------
+
 def get_summary(userID):
     conn = get_connection()
     cursor = conn.cursor()
@@ -115,11 +111,34 @@ def get_summary(userID):
     """, (userID,))
     stopwatch_time = cursor.fetchone()[0] or 0
 
+    # Get break time
+    cursor.execute("""
+        SELECT COALESCE(SUM(breakDuration), 0)
+        FROM pomodoro_sessions
+        WHERE userID=?
+    """, (userID,))
+    break_time = cursor.fetchone()[0] or 0
+
+    total_focus_time = pomodoro_time + stopwatch_time
+    total_allocation_time = stopwatch_time + pomodoro_time + break_time
+
+    if total_allocation_time > 0:
+        deep_work_percent = round((stopwatch_time / total_allocation_time) * 100)
+        study_percent = round((pomodoro_time / total_allocation_time) * 100)
+        break_percent = round((break_time / total_allocation_time) * 100)
+    else:
+        deep_work_percent = 0
+        study_percent = 0
+        break_percent = 0
+
     conn.close()
 
     return {
         "tasksCompleted": tasks_completed,
         "pendingTasks": pending_tasks,
         "goalsCompleted": goals_completed,
-        "totalFocusTime": pomodoro_time + stopwatch_time
+        "totalFocusTime": total_focus_time,
+        "deepWorkPercent": deep_work_percent,
+        "studyPercent": study_percent,
+        "breakPercent": break_percent
     }
