@@ -96,12 +96,14 @@ function createDailyChart(data) {
   });
 }
 
-// Weekly chart
+// Weekly chart (FIXED LABELS)
 function createWeeklyChart(data) {
   const ctx = document.getElementById("weeklyChart");
   if (!ctx || !Array.isArray(data)) return;
 
-  const labels = data.map(d => `Week ${d.week || ""}`);
+  // 🔥 FIX: Clean labels
+  const labels = data.map((_, index) => `Week ${index + 1}`);
+
   const focusTime = data.map(d => Number(((d.total_focus_time || 0) / 3600).toFixed(2)));
 
   new Chart(ctx, {
@@ -214,7 +216,7 @@ async function createSessionChart() {
   }
 }
 
-// Monthly chart
+// Monthly chart (FIXED LABELS)
 async function createMonthlyChart() {
   const ctx = document.getElementById("monthlyChart");
   if (!ctx) return;
@@ -225,7 +227,15 @@ async function createMonthlyChart() {
 
     if (!Array.isArray(weekly) || weekly.length === 0) return;
 
-    const labels = weekly.map(w => `Week ${w.week || ''}`);
+    // 🔥 FIX: Convert to readable dates
+    const labels = weekly.map(w => {
+      const date = new Date(w.week);
+      return date.toLocaleDateString('en-IN', {
+        day: 'numeric',
+        month: 'short'
+      });
+    });
+
     const data = weekly.map(w => Number(((w.total_focus_time || 0) / 3600).toFixed(2)));
 
     new Chart(ctx, {
