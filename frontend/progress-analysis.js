@@ -227,14 +227,24 @@ async function createMonthlyChart() {
 
     if (!Array.isArray(weekly) || weekly.length === 0) return;
 
-    // 🔥 FIX: Convert to readable dates
     const labels = weekly.map(w => {
-      const date = new Date(w.week);
-      return date.toLocaleDateString('en-IN', {
-        day: 'numeric',
-        month: 'short'
-      });
+  const [year, week] = w.week.split('-');
+
+  // Convert week number to approximate start date
+  const firstDay = new Date(year, 0, 1 + (week - 1) * 7);
+
+  const start = new Date(firstDay);
+  const end = new Date(firstDay);
+  end.setDate(start.getDate() + 6);
+
+  const format = (date) =>
+    date.toLocaleDateString('en-IN', {
+      day: 'numeric',
+      month: 'short'
     });
+
+  return `${format(start)} - ${format(end)}`;
+});
 
     const data = weekly.map(w => Number(((w.total_focus_time || 0) / 3600).toFixed(2)));
 
