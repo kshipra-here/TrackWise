@@ -96,13 +96,27 @@ function createDailyChart(data) {
   });
 }
 
-// Weekly chart (FIXED LABELS)
+// Weekly chart (DATE RANGE LABELS)
 function createWeeklyChart(data) {
   const ctx = document.getElementById("weeklyChart");
   if (!ctx || !Array.isArray(data)) return;
 
-  // 🔥 FIX: Clean labels
-  const labels = data.map((_, index) => `Week ${index + 1}`);
+  const labels = data.map(d => {
+    const [year, week] = d.week.split('-');
+
+    const firstDay = new Date(year, 0, 1 + (week - 1) * 7);
+    const start = new Date(firstDay);
+    const end = new Date(firstDay);
+    end.setDate(start.getDate() + 6);
+
+    const format = (date) =>
+      date.toLocaleDateString('en-IN', {
+        day: 'numeric',
+        month: 'short'
+      });
+
+    return `${format(start)} - ${format(end)}`;
+  });
 
   const focusTime = data.map(d => Number(((d.total_focus_time || 0) / 3600).toFixed(2)));
 
@@ -216,37 +230,24 @@ async function createSessionChart() {
   }
 }
 
-// Monthly chart (FIXED LABELS)
+// Monthly chart (JAN, FEB, MAR LABELS)
 async function createMonthlyChart() {
   const ctx = document.getElementById("monthlyChart");
   if (!ctx) return;
 
   try {
-    const weeklyRes = await fetch(`${API_URL}/analytics/weekly/${userID}`);
-    const weekly = await weeklyRes.json();
+    const monthlyRes = await fetch(`${API_URL}/analytics/monthly/${userID}`);
+    const monthly = await monthlyRes.json();
 
-    if (!Array.isArray(weekly) || weekly.length === 0) return;
+    if (!Array.isArray(monthly) || monthly.length === 0) return;
 
-    const labels = weekly.map(w => {
-  const [year, week] = w.week.split('-');
-
-  // Convert week number to approximate start date
-  const firstDay = new Date(year, 0, 1 + (week - 1) * 7);
-
-  const start = new Date(firstDay);
-  const end = new Date(firstDay);
-  end.setDate(start.getDate() + 6);
-
-  const format = (date) =>
-    date.toLocaleDateString('en-IN', {
-      day: 'numeric',
-      month: 'short'
+    const labels = monthly.map(m => {
+      const [year, month] = m.month.split('-');
+      const date = new Date(year, month - 1, 1);
+      return date.toLocaleDateString('en-IN', { month: 'short' });
     });
 
-  return `${format(start)} - ${format(end)}`;
-});
-
-    const data = weekly.map(w => Number(((w.total_focus_time || 0) / 3600).toFixed(2)));
+    const data = monthly.map(m => Number(((m.total_focus_time || 0) / 3600).toFixed(2)));
 
     new Chart(ctx, {
       type: 'line',

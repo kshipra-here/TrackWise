@@ -374,7 +374,7 @@ def sessions_api(userID):
 
 
 
-from analytics import get_daily_analytics, get_weekly_analytics, get_summary
+from analytics import get_daily_analytics, get_weekly_analytics, get_monthly_analytics, get_summary
 
 @app.route("/analytics/daily/<int:userID>")
 def daily_analytics(userID):
@@ -389,6 +389,14 @@ def daily_analytics(userID):
 def weekly_analytics(userID):
     try:
         data = get_weekly_analytics(userID)
+        return jsonify(data) if isinstance(data, list) else data
+    except Exception as e:
+        return {"error": str(e)}, 500
+    
+@app.route("/analytics/monthly/<int:userID>")
+def monthly_analytics(userID):
+    try:
+        data = get_monthly_analytics(userID)
         return jsonify(data) if isinstance(data, list) else data
     except Exception as e:
         return {"error": str(e)}, 500

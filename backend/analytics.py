@@ -39,11 +39,14 @@ def get_daily_analytics(userID):
     conn.close()
     return daily_data
 
+
 # WEEKLY ANALYTICS
 
 def get_weekly_analytics(userID):
     conn = get_connection()
     cursor = conn.cursor()
+
+    weekly_totals = {}
 
     cursor.execute("""
         SELECT 
@@ -54,16 +57,82 @@ def get_weekly_analytics(userID):
         GROUP BY week
         ORDER BY week
     """, (userID,))
+    for row in cursor.fetchall():
+        week = row[0]
+        total = row[1] or 0
+        weekly_totals[week] = weekly_totals.get(week, 0) + total
+
+    cursor.execute("""
+        SELECT 
+            strftime('%Y-%W', sessionDate) as week,
+            COALESCE(SUM(totalDuration), 0) as total_focus_time
+        FROM stopwatch_sessions
+        WHERE userID=?
+        GROUP BY week
+        ORDER BY week
+    """, (userID,))
+    for row in cursor.fetchall():
+        week = row[0]
+        total = row[1] or 0
+        weekly_totals[week] = weekly_totals.get(week, 0) + total
 
     weekly_data = []
-    for row in cursor.fetchall():
+    for week in sorted(weekly_totals.keys()):
         weekly_data.append({
-            "week": row[0],
-            "total_focus_time": row[1] or 0
+            "week": week,
+            "total_focus_time": weekly_totals[week]
         })
 
     conn.close()
     return weekly_data
+
+
+# MONTHLY ANALYTICS
+
+def get_monthly_analytics(userID):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    monthly_totals = {}
+
+    cursor.execute("""
+        SELECT 
+            strftime('%Y-%m', sessionDate) as month,
+            COALESCE(SUM(workDuration), 0) as total_focus_time
+        FROM pomodoro_sessions
+        WHERE userID=?
+        GROUP BY month
+        ORDER BY month
+    """, (userID,))
+    for row in cursor.fetchall():
+        month = row[0]
+        total = row[1] or 0
+        monthly_totals[month] = monthly_totals.get(month, 0) + total
+
+    cursor.execute("""
+        SELECT 
+            strftime('%Y-%m', sessionDate) as month,
+            COALESCE(SUM(totalDuration), 0) as total_focus_time
+        FROM stopwatch_sessions
+        WHERE userID=?
+        GROUP BY month
+        ORDER BY month
+    """, (userID,))
+    for row in cursor.fetchall():
+        month = row[0]
+        total = row[1] or 0
+        monthly_totals[month] = monthly_totals.get(month, 0) + total
+
+    monthly_data = []
+    for month in sorted(monthly_totals.keys()):
+        monthly_data.append({
+            "month": month,
+            "total_focus_time": monthly_totals[month]
+        })
+
+    conn.close()
+    return monthly_data
+
 
 # SUMMARY ANALYTICS
 
